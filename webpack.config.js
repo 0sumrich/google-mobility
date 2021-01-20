@@ -48,6 +48,9 @@ module.exports = {
             chunkFilename: "[id].css"
         })
     ],
+    externals: {
+        moment: 'moment'
+    },
     mode: "development",
     devtool: "inline-source-map"
 };
