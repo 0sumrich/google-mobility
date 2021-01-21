@@ -1,3 +1,4 @@
+import style from "./style.css";
 import csvData from './data.csv'
 import draw from './functions/draw'
 import parseData from './functions/parseData'

@@ -14,6 +14,11 @@ const d3 = {
 }
 
 function draw(data) {
+    /*
+    var margin = {top: 20, right: 80, bottom: 30, left: 50},
+    width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
+    height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
+    */
     const column = Object.keys(data[0]).filter(x => !['date', 'sub_region_1', 'sub_region_2'].includes(x))[0]
     const dates = data.map(o => o.date)
     const values = data.map(o => +o[column])
