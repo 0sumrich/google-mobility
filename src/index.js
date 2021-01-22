@@ -7,7 +7,6 @@ import lineData from './functions/lineData'
 import setOptions from './functions/setOptions'
 
 const data = parseData(csvData)
-const subRegion1 = [...new Set(data.map(o => o.sub_region_1))]
 const subRegion2 = [...new Set(data.map(o => o.sub_region_2))]
 
 const defaults = {
@@ -17,8 +16,8 @@ const defaults = {
 }
 
 const chartData = lineData(data, defaults)
-setOptions(data, defaults)
 draw(chartData)
+setOptions(data, defaults)
 
 document.addEventListener('DOMContentLoaded', function () {
     const elems = document.querySelectorAll('select');

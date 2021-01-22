@@ -3,15 +3,17 @@ const d3 = { select, selectAll }
 
 function setSr1(data, defaultRegion) {
     const id = 'sub_region_1'
-    d3.select(id)
+    const d = [...new Set(data.map(o => o[id]))].sort()
+
+    d3.select(`#${id}`)
+        .select('select')
         .selectAll('option')
-        .data(data)
+        .data(d)
         .join('option')
-        .attr('selected', d => {
-            return d[id] == defaultRegion ? true : false
-        })
-        .attr('value', d => d[id])
-        .text(d => d[id])
+        .property('selected', d=>d==defaultRegion)
+        .attr('value', d => d)
+        .text(d => d)
+
 }
 
 function setOptions(data, options) {
