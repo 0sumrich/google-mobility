@@ -2,7 +2,7 @@ import { scaleLinear, scaleTime } from 'd3-scale'
 import { select } from 'd3-selection'
 import { extent } from 'd3-array'
 import { line } from 'd3-shape'
-import {axisBottom, axisLeft} from 'd3-axis'
+import { axisBottom, axisLeft } from 'd3-axis'
 const d3 = {
     axisBottom,
     axisLeft,
@@ -14,17 +14,14 @@ const d3 = {
 }
 
 function draw(data) {
-    /*
-    var margin = {top: 20, right: 80, bottom: 30, left: 50},
-    width = parseInt(d3.select("#chart").style("width")) - margin.left - margin.right,
-    height = parseInt(d3.select("#chart").style("height")) - margin.top - margin.bottom;
-    */
+    const w = 950
+    const h = 500
     const column = Object.keys(data[0]).filter(x => !['date', 'sub_region_1', 'sub_region_2'].includes(x))[0]
     const dates = data.map(o => o.date)
     const values = data.map(o => +o[column])
     const margin = { top: 30, right: 50, bottom: 60, left: 70 };
-    const width = 950 - margin.left - margin.right;
-    const height = 600 - margin.top - margin.bottom;
+    const width = w - margin.left - margin.right;
+    const height = h - margin.top - margin.bottom;
     const x = d3.scaleTime()
         .domain(d3.extent(dates))
         .range([0, width])
@@ -33,8 +30,9 @@ function draw(data) {
         .range([height, 0]);
     const chart = d3
         .select("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        // .attr("width", width + margin.left + margin.right)
+        // .attr("height", height + margin.top + margin.bottom)
+        .attr('viewBox', `0 0 ${w} ${h}`)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     const line = d3

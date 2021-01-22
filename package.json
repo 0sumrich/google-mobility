@@ -26,7 +26,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "dev": "webpack serve --open",
+    "dev": "webpack serve",
     "build": "webpack"
   },
   "dependencies": {
@@ -36,6 +36,7 @@
     "d3-scale": "^3.2.3",
     "d3-selection": "^2.0.0",
     "d3-shape": "^2.0.0",
-    "luxon": "^1.25.0"
+    "luxon": "^1.25.0",
+    "materialize-css": "^1.0.0-rc.2"
   }
 }
