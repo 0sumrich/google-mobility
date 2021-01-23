@@ -15,6 +15,8 @@ const subRegion2UniqueRegions = (data, sr1) => uniqueRegions(
     subRegion2Id
 )
 
+const getSelectValue = id => d3.select(selector(id)).property('value')
+
 function setOptions(arr, selected, id) {
 
     d3.select(selector(id))
@@ -33,13 +35,19 @@ function addEventListeners(data) {
     d3.select(selector(subRegion1Id))
         .on('change', e => {
             const subRegion1 = e.target.value
-            const column = d3.select(selector(columnId)).property('value')
+            const column = getSelectValue(columnId)
             // set option two options
             const sr2Options = subRegion2UniqueRegions(data, subRegion1)
             const subRegion2 = sr2Options[0]
             setOptions(sr2Options, subRegion2, subRegion2Id)
             // redraw
             redraw(lineData(data, { subRegion1, subRegion2, column }))
+        })
+    d3.select(selector(subRegion2Id))
+        .on('change', e => {
+            const subRegion1 = getSelectValue(subRegion1Id)
+            const subRegion2 = e.target.value
+            const column = getSelectValue(subRegion2Id)
         })
 }
 
