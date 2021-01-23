@@ -30,7 +30,6 @@
     "build": "webpack"
   },
   "dependencies": {
-    "chartjs-adapter-luxon": "^0.2.2",
     "d3-array": "^2.9.1",
     "d3-axis": "^2.0.0",
     "d3-scale": "^3.2.3",

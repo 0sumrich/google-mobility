@@ -29,7 +29,7 @@ function draw(data) {
         .domain(d3.extent(values))
         .range([height, 0]);
     const chart = d3
-        .select("svg")
+        .select("#chart")
         // .attr("width", width + margin.left + margin.right)
         // .attr("height", height + margin.top + margin.bottom)
         .attr('viewBox', `0 0 ${w} ${h}`)
@@ -62,4 +62,16 @@ function draw(data) {
         .call(yAxis);
 }
 
-export default draw
+function clear(id) {
+    d3
+        .select("#"+id)
+        .selectAll("*")
+        .remove();
+}
+
+function redraw(data) {
+    clear('chart')
+    draw(data)
+}
+
+export { draw, clear, redraw }

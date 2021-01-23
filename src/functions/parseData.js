@@ -1,15 +1,32 @@
+const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+const fixHeader = (s) => {
+    const search = '_percent'
+    return s.includes(search) ?
+        capitalize(s.slice(0, s.indexOf(search))).replaceAll('_', ' ') :
+        s
+}
+
+const fixHeaders = arr => {
+    const search = '_percent'
+    return arr.map(fixHeader)
+}
+
 export default function parseData(data) {
-    const headers = data[0];
+    const headers = fixHeaders(data[0]);
     const columns = [
         "sub_region_1",
         'sub_region_2',
         'date',
-        "retail_and_recreation_percent_change_from_baseline",
-        "grocery_and_pharmacy_percent_change_from_baseline",
-        "parks_percent_change_from_baseline",
-        "transit_stations_percent_change_from_baseline",
-        "workplaces_percent_change_from_baseline",
-        "residential_percent_change_from_baseline"
+        "Retail and recreation",
+        "Grocery and pharmacy",
+        "Parks",
+        "Transit stations",
+        "Workplaces",
+        "Residential"
     ];
     return data.slice(1).map(arr => {
         const o = {};
