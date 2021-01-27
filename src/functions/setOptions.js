@@ -47,7 +47,15 @@ function addEventListeners(data) {
         .on('change', e => {
             const subRegion1 = getSelectValue(subRegion1Id)
             const subRegion2 = e.target.value
-            const column = getSelectValue(subRegion2Id)
+            const column = getSelectValue(columnId)
+            redraw(lineData(data, { subRegion1, subRegion2, column }))
+        })
+    d3.select(selector(columnId))
+        .on('change', e => {
+            const subRegion1 = getSelectValue(subRegion1Id)
+            const subRegion2 = getSelectValue(subRegion2Id)
+            const column = e.target.value
+            redraw(lineData(data, { subRegion1, subRegion2, column }))
         })
 }
 
