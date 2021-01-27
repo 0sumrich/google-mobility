@@ -51,6 +51,6 @@ module.exports = {
     externals: {
         moment: 'moment'
     },
-    mode: "development",
+    mode: "production",
     devtool: "inline-source-map"
 };
