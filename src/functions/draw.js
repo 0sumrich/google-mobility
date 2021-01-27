@@ -1,5 +1,6 @@
+import { DateTime } from 'luxon'
 import { scaleLinear, scaleTime } from 'd3-scale'
-import { select } from 'd3-selection'
+import { select, pointers } from 'd3-selection'
 import { extent } from 'd3-array'
 import { line } from 'd3-shape'
 import { axisBottom, axisLeft } from 'd3-axis'
@@ -10,7 +11,8 @@ const d3 = {
     line,
     scaleLinear,
     scaleTime,
-    select
+    select,
+    pointers
 }
 
 const columns = ["Retail and recreation",
@@ -19,10 +21,13 @@ const columns = ["Retail and recreation",
     "Transit stations",
     "Workplaces",
     "Residential"]
-const colors = ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#a65628']
+const colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#a65628']
 const getColor = col => colors[columns.indexOf(col)]
+const formatDate = d => DateTime.fromJSDate(d).setLocale('en-GB').toLocaleString()
+const formatPercent = n => `${n.toFixed(2)}%`;
 
 function draw(data) {
+    const div = d3.select(".tooltip")
     const w = 950
     const h = 500
     const column = Object.keys(data[0]).filter(x => !['date', 'sub_region_1', 'sub_region_2'].includes(x))[0]
@@ -40,8 +45,6 @@ function draw(data) {
         .range([height, 0]);
     const chart = d3
         .select("#chart")
-        // .attr("width", width + margin.left + margin.right)
-        // .attr("height", height + margin.top + margin.bottom)
         .attr('viewBox', `0 0 ${w} ${h}`)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -56,7 +59,19 @@ function draw(data) {
         .attr("stroke", lineColor)
         .attr('stroke-width', 1.5)
         .attr('fill', 'none')
-        .attr("d", line);
+        .attr("d", line)
+        .on('mouseover', (e, d) => {
+            const [xPos, yPos] = d3.pointers(e)[0]
+            const date = x.invert(xPos)
+            const yVal = y.invert(yPos)
+            const htmlString = formatDate(date) + "<br/>" +formatPercent(yVal)
+            div
+                .style("opacity", .9)
+                .html(htmlString)
+                .style("left", `${e.pageX}px`)
+                .style("top", `${e.pageY - 15}px`);
+        })
+        .on('mouseout', () => div.style('opacity', 0));
 
     const xAxis = d3.axisBottom(x);
     const yAxis = d3.axisLeft(y);
