@@ -1,13 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.js",
     optimization: {
-        minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin({})]
+        minimizer: [new CssMinimizerPlugin()]
     },
     performance: {
         hints: false
@@ -20,10 +19,12 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
+                include: path.resolve(__dirname, 'src'),
                 use: [MiniCssExtractPlugin.loader, "css-loader"]
             },
             {
                 test: /\.html$/,
+                include: path.resolve(__dirname, 'src'),
                 use: [
                     {
                         loader: "html-loader",
@@ -35,6 +36,7 @@ module.exports = {
             },
             {
                 test: /\.csv$/,
+                include: path.resolve(__dirname, 'src'),
                 use: ['csv-loader'],
             },
         ]
@@ -48,9 +50,5 @@ module.exports = {
             chunkFilename: "[id].css"
         })
     ],
-    externals: {
-        moment: 'moment'
-    },
-    mode: "production",
     devtool: "inline-source-map"
 };
