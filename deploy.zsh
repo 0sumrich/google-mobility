@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+git pull
 conda activate base
 python update.py
 git add .
